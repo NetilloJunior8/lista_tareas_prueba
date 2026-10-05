@@ -1,0 +1,9 @@
+Carpeta opcional para cargar datos iniciales.
+
+Cualquier archivo .sql que pongas aquí se ejecuta UNA SOLA VEZ, cuando MySQL arranca
+con la base de datos vacía (la primera vez, o después de "docker compose down -v").
+
+Las tablas las crea Spring/Hibernate solas (ddl-auto=update), así que NO hace falta
+un script para crearlas. Esta carpeta solo sirve si quieres datos de ejemplo.
+
+Los archivos .txt como este se ignoran.

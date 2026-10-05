@@ -1,0 +1,55 @@
+# Uso:  docker compose up --build      →  http://localhost:8081
+# No hace falta crear ningún archivo ni configurar MySQL: todo trae valores por defecto.
+# Para cambiarlos, copia .env.example a .env y edítalo.
+
+services:
+  mysqldb:
+    image: mysql:8.0
+    container_name: mysqldb
+    restart: unless-stopped
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-lista_tareas}
+      MYSQL_USER: ${MYSQL_USER:-admin}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-concredito2026!}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./db-init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+    # Sin "ports": MySQL queda solo dentro de la red de Docker.
+    # Así no choca con el MySQL de XAMPP (3306) si el líder lo tiene encendido.
+
+  backend:
+    build:
+      context: ./backend/backend
+      dockerfile: Dockerfile.full
+    container_name: spring-backend
+    restart: on-failure
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+    environment:
+      # Estas variables PISAN lo que diga application.properties (localhost/admin).
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/${MYSQL_DATABASE:-lista_tareas}?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER:-admin}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD:-concredito2026!}
+    # Sin "ports": el backend solo lo ve Nginx por la red interna.
+
+  frontend:
+    build: ./frontend
+    container_name: react-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      # 8081 y no 80, porque el Apache de XAMPP suele ocupar el 80.
+      - "${FRONTEND_PORT:-8081}:80"
+
+volumes:
+  mysql_data:
