@@ -64,11 +64,11 @@ export default function TaskList({ tareas, onToggle, onEdit, onDelete, isMutatin
 
       {/* Lista de tareas o estado vacío */}
       {tareasFiltradas.length === 0 ? (
-        <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-slate-800 bg-slate-900/40 py-16 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-800/80 text-slate-500">
+        <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-green-200 bg-white/40 py-16 text-center">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-green-100/80 text-green-950">
             <ClipboardList size={24} />
           </div>
-          <p className="text-sm font-medium text-slate-400">
+          <p className="text-sm font-medium text-green-950">
             {filter === 'todas'
               ? 'No tienes tareas aún. ¡Agrega tu primera tarea!'
               : `No hay tareas ${filter}.`

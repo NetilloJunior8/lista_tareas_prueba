@@ -38,9 +38,9 @@ export default function TaskForm({ onSubmit, isLoading }: TaskFormProps) {
   };
 
   return (
-    <Card className="border-slate-800/80 bg-slate-900/60 shadow-xl">
+    <Card className="border-green-200/80 bg-white/60 shadow-xl">
       <CardHeader className="p-5 pb-3">
-        <CardTitle className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+        <CardTitle className="text-xs font-semibold uppercase tracking-wider text-green-950">
           Nueva Tarea
         </CardTitle>
       </CardHeader>
@@ -55,7 +55,7 @@ export default function TaskForm({ onSubmit, isLoading }: TaskFormProps) {
               className={errors.titulo ? 'border-rose-500/80 focus-visible:ring-rose-500/30' : ''}
             />
             {errors.titulo && (
-              <p className="mt-1 text-xs text-rose-400">{errors.titulo.message}</p>
+              <p className="mt-1 text-xs text-rose-600">{errors.titulo.message}</p>
             )}
           </div>
 
@@ -68,7 +68,7 @@ export default function TaskForm({ onSubmit, isLoading }: TaskFormProps) {
               className={errors.descripcion ? 'border-rose-500/80 focus-visible:ring-rose-500/30' : ''}
             />
             {errors.descripcion && (
-              <p className="mt-1 text-xs text-rose-400">{errors.descripcion.message}</p>
+              <p className="mt-1 text-xs text-rose-600">{errors.descripcion.message}</p>
             )}
           </div>
 

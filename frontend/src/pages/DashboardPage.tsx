@@ -91,30 +91,30 @@ export default function DashboardPage() {
   const progreso = totalTareas > 0 ? Math.round((completadas / totalTareas) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
+    <div className="min-h-screen bg-green-50 text-green-950">
       <Navbar />
 
       <main className="mx-auto max-w-4xl px-4 py-8">
         {/* STATS CARDS SHADCN */}
         <div className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-3">
-          <Card className="border-slate-800 bg-slate-900/60 p-5">
-            <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Tareas</p>
-            <p className="mt-1 text-3xl font-bold text-slate-100">{totalTareas}</p>
+          <Card className="border-green-200 bg-white/60 p-5">
+            <p className="text-xs font-semibold uppercase tracking-wider text-green-950">Total Tareas</p>
+            <p className="mt-1 text-3xl font-bold text-green-950">{totalTareas}</p>
           </Card>
 
           <Card className="border-emerald-500/20 bg-emerald-500/5 p-5">
-            <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Completadas</p>
-            <p className="mt-1 text-3xl font-bold text-emerald-400">{completadas}</p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-emerald-700">Completadas</p>
+            <p className="mt-1 text-3xl font-bold text-emerald-700">{completadas}</p>
           </Card>
 
-          <Card className="col-span-2 border-indigo-500/20 bg-indigo-500/5 p-5 sm:col-span-1">
+          <Card className="col-span-2 border-green-600/20 bg-green-600/5 p-5 sm:col-span-1">
             <div className="flex items-center justify-between">
-              <p className="text-xs font-semibold uppercase tracking-wider text-indigo-300">Progreso</p>
-              <p className="text-xl font-bold text-indigo-400">{progreso}%</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-green-800">Progreso</p>
+              <p className="text-xl font-bold text-green-700">{progreso}%</p>
             </div>
-            <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-slate-800">
+            <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-green-100">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 transition-all duration-500"
+                className="h-full rounded-full bg-gradient-to-r from-green-600 to-green-600 transition-all duration-500"
                 style={{ width: `${progreso}%` }}
               />
             </div>
@@ -128,13 +128,13 @@ export default function DashboardPage() {
 
         {/* HEADER Y BOTÓN EXCEL */}
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-bold tracking-tight text-slate-100">Mis Tareas</h2>
+          <h2 className="text-lg font-bold tracking-tight text-green-950">Mis Tareas</h2>
           <Button
             variant="outline"
             size="sm"
             onClick={() => exportExcel()}
             disabled={isExporting || totalTareas === 0}
-            className="gap-2 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 hover:text-emerald-300"
+            className="gap-2 border-emerald-500/30 text-emerald-700 hover:bg-emerald-500/10 hover:text-emerald-700"
           >
             {isExporting ? (
               <Loader2 size={15} className="animate-spin" />
@@ -151,12 +151,12 @@ export default function DashboardPage() {
             {[1, 2, 3].map((i) => (
               <div
                 key={i}
-                className="h-20 animate-pulse rounded-xl border border-slate-800 bg-slate-900/60"
+                className="h-20 animate-pulse rounded-xl border border-green-200 bg-white/60"
               />
             ))}
           </div>
         ) : isError ? (
-          <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-6 text-center text-sm font-medium text-rose-400">
+          <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-6 text-center text-sm font-medium text-rose-600">
             No se pudieron cargar las tareas. Verifica que el backend esté corriendo.
           </div>
         ) : (

@@ -4,22 +4,22 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../lib/utils';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]',
+  'inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600/50 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]',
   {
     variants: {
       variant: {
         default:
-          'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-500/25 hover:from-indigo-500 hover:to-violet-500 hover:shadow-indigo-500/40',
+          'bg-gradient-to-r from-green-700 to-green-700 text-white shadow-lg shadow-green-600/25 hover:from-green-600 hover:to-green-600 hover:shadow-green-600/40',
         destructive:
           'bg-rose-600 text-white shadow-sm hover:bg-rose-500 hover:shadow-rose-600/20',
         outline:
-          'border border-slate-800 bg-slate-900/60 text-slate-200 hover:bg-slate-800 hover:text-white hover:border-slate-700',
+          'border border-green-200 bg-white/60 text-green-950 hover:bg-green-100 hover:text-white hover:border-green-300',
         secondary:
-          'bg-slate-800 text-slate-100 hover:bg-slate-700',
+          'bg-green-100 text-green-950 hover:bg-green-200',
         ghost:
-          'text-slate-400 hover:bg-slate-800/60 hover:text-slate-100',
+          'text-green-950 hover:bg-green-100/60 hover:text-green-950',
         link:
-          'text-indigo-400 underline-offset-4 hover:underline hover:text-indigo-300',
+          'text-green-700 underline-offset-4 hover:underline hover:text-green-800',
         success:
           'bg-emerald-600 text-white shadow-sm hover:bg-emerald-500 hover:shadow-emerald-600/20',
       },

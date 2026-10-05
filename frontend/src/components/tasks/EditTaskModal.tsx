@@ -66,14 +66,14 @@ export default function EditTaskModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="border-slate-800 bg-slate-900 text-slate-100 sm:max-w-md">
+      <DialogContent className="border-green-200 bg-white text-green-950 sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-lg font-bold text-slate-100">Editar Tarea</DialogTitle>
+          <DialogTitle className="text-lg font-bold text-green-950">Editar Tarea</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4 pt-2">
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+            <label className="text-xs font-semibold uppercase tracking-wider text-green-950">
               Título
             </label>
             <Input
@@ -83,12 +83,12 @@ export default function EditTaskModal({
               className={errors.titulo ? 'border-rose-500/80' : ''}
             />
             {errors.titulo && (
-              <p className="text-xs text-rose-400">{errors.titulo.message}</p>
+              <p className="text-xs text-rose-600">{errors.titulo.message}</p>
             )}
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+            <label className="text-xs font-semibold uppercase tracking-wider text-green-950">
               Descripción
             </label>
             <Textarea
@@ -99,7 +99,7 @@ export default function EditTaskModal({
               className={errors.descripcion ? 'border-rose-500/80' : ''}
             />
             {errors.descripcion && (
-              <p className="text-xs text-rose-400">{errors.descripcion.message}</p>
+              <p className="text-xs text-rose-600">{errors.descripcion.message}</p>
             )}
           </div>
 

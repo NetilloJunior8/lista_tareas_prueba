@@ -31,8 +31,8 @@ export default function TaskCard({ tarea, onToggle, onEdit, onDelete, isLoading 
       className={`
         group flex flex-col sm:flex-row sm:items-center gap-3.5 p-4 transition-all duration-200
         ${tarea.completada
-          ? 'border-slate-800/50 bg-slate-900/30 opacity-60'
-          : 'border-slate-800/80 bg-slate-900/70 hover:-translate-y-0.5 hover:border-indigo-500/40 hover:shadow-lg hover:shadow-indigo-500/5'
+          ? 'border-green-200/50 bg-white/30 opacity-60'
+          : 'border-green-200/80 bg-white/70 hover:-translate-y-0.5 hover:border-green-600/40 hover:shadow-lg hover:shadow-green-600/5'
         }
       `}
     >
@@ -41,11 +41,11 @@ export default function TaskCard({ tarea, onToggle, onEdit, onDelete, isLoading 
         <button
           onClick={() => onToggle(tarea)}
           disabled={isLoading}
-          className="mt-0.5 shrink-0 text-slate-500 transition-colors hover:text-indigo-400 focus:outline-none disabled:cursor-not-allowed"
+          className="mt-0.5 shrink-0 text-green-950 transition-colors hover:text-green-700 focus:outline-none disabled:cursor-not-allowed"
           aria-label={tarea.completada ? 'Marcar como pendiente' : 'Marcar como completada'}
         >
           {tarea.completada ? (
-            <CheckCircle2 size={22} className="text-emerald-400 fill-emerald-400/10" />
+            <CheckCircle2 size={22} className="text-emerald-700 fill-emerald-700/10" />
           ) : (
             <Circle size={22} />
           )}
@@ -56,16 +56,16 @@ export default function TaskCard({ tarea, onToggle, onEdit, onDelete, isLoading 
           <p
             className={`
               font-medium leading-snug tracking-tight break-words
-              ${tarea.completada ? 'text-slate-500 line-through' : 'text-slate-100'}
+              ${tarea.completada ? 'text-green-950 line-through' : 'text-green-950'}
             `}
           >
             {tarea.titulo}
           </p>
           {tarea.descripcion && (
-            <p className="mt-1 text-sm text-slate-400 leading-relaxed break-words">{tarea.descripcion}</p>
+            <p className="mt-1 text-sm text-green-950 leading-relaxed break-words">{tarea.descripcion}</p>
           )}
           {tarea.fechaCreacion && (
-            <p className="mt-2 text-[11px] font-medium text-slate-500">
+            <p className="mt-2 text-[11px] font-medium text-green-950">
               {new Date(tarea.fechaCreacion).toLocaleDateString('es-MX', {
                 day: 'numeric',
                 month: 'short',
@@ -76,7 +76,7 @@ export default function TaskCard({ tarea, onToggle, onEdit, onDelete, isLoading 
         </div>
       </div>
 
-      <div className="flex items-center justify-between sm:justify-end gap-2 pt-2 sm:pt-0 border-t border-slate-800/40 sm:border-0 shrink-0">
+      <div className="flex items-center justify-between sm:justify-end gap-2 pt-2 sm:pt-0 border-t border-green-200/40 sm:border-0 shrink-0">
         {/* Badge de estado */}
         <Badge
           variant={tarea.completada ? 'success' : 'default'}
@@ -90,7 +90,7 @@ export default function TaskCard({ tarea, onToggle, onEdit, onDelete, isLoading 
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8 text-slate-400 hover:text-slate-100 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
+              className="h-8 w-8 text-green-950 hover:text-green-950 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
               disabled={isLoading}
             >
               <MoreVertical size={16} />
@@ -99,7 +99,7 @@ export default function TaskCard({ tarea, onToggle, onEdit, onDelete, isLoading 
           <DropdownMenuContent align="end" className="w-36">
             {onEdit && (
               <DropdownMenuItem onClick={() => onEdit(tarea)}>
-                <Pencil size={14} className="text-indigo-400" />
+                <Pencil size={14} className="text-green-700" />
                 Editar
               </DropdownMenuItem>
             )}
@@ -111,7 +111,7 @@ export default function TaskCard({ tarea, onToggle, onEdit, onDelete, isLoading 
                 </>
               ) : (
                 <>
-                  <CheckCircle2 size={14} className="text-emerald-400" />
+                  <CheckCircle2 size={14} className="text-emerald-700" />
                   Completar
                 </>
               )}
@@ -119,7 +119,7 @@ export default function TaskCard({ tarea, onToggle, onEdit, onDelete, isLoading 
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() => onDelete(tarea.id)}
-              className="text-rose-400 focus:bg-rose-500/10 focus:text-rose-300"
+              className="text-rose-600 focus:bg-rose-500/10 focus:text-rose-600"
             >
               <Trash2 size={14} />
               Eliminar
