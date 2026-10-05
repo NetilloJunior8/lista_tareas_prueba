@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Getter
 @Setter
@@ -27,7 +28,8 @@ public class Tarea {
     @Column(nullable = false)
     private boolean completada = false;
 
-    @Column(name = "fecha_creacion", insertable = false, updatable = false)
+   @CreationTimestamp
+   @Column(name = "fecha_creacion", updatable = false)
     private LocalDateTime fechaCreacion;
 
     @ManyToOne(fetch = FetchType.LAZY)
