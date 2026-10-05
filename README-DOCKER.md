@@ -1,7 +1,5 @@
-# Cómo correr TareasConcredito con Docker
+# correr TareasConcredito con Docker
 
-No necesitas XAMPP, ni Java, ni Node, ni crear usuarios en MySQL.
-Solo **Docker Desktop** abierto (en Windows debe decir "Engine running").
 
 ## 1. Levantar todo
 
@@ -9,7 +7,7 @@ En una terminal, dentro de esta carpeta (donde está `docker-compose.yml`):
 
     docker compose up --build
 
-La primera vez tarda unos minutos (descarga imágenes y compila el backend y el frontend).
+La primera vez tarda unos minutos.
 Espera a ver en el log una línea con `Started BackendApplication`.
 
 ## 2. Abrir la aplicación
@@ -23,13 +21,6 @@ No hay usuarios precargados: pulsa **Crear cuenta**, regístrate y entra.
     docker compose down          # apaga, conserva los datos
     docker compose down -v       # apaga y BORRA la base de datos
 
-## Qué se levanta
-
-| Contenedor      | Qué es                                   | Visible desde fuera |
-|-----------------|------------------------------------------|---------------------|
-| react-frontend  | React compilado + Nginx (reenvía /api)   | Sí, puerto 8081     |
-| spring-backend  | Spring Boot + Spring Security (JWT)      | No (red interna)    |
-| mysqldb         | MySQL 8, crea solo la BD y el usuario    | No (red interna)    |
 
 ## Si algo falla
 
