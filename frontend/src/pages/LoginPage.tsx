@@ -1,20 +1,6 @@
 /*
   =====================================================
-  PÁGINA DE LOGIN - pages/LoginPage.tsx
-  =====================================================
-  Esta página usa React Hook Form + Zod para validar.
-  La petición al backend usa useMutation de TanStack Query.
-
-  ¿Qué es useMutation?
-  Es para operaciones que MODIFICAN datos (POST, PUT, DELETE).
-  A diferencia de useQuery (para GET), las mutaciones
-  no se ejecutan automáticamente; se ejecutan cuando
-  tú llamas a 'mutate()' o 'mutateAsync()'.
-
-  Propiedades útiles de useMutation:
-  - isPending: true mientras la petición está en curso
-  - isError: true si la petición falló
-  - error: el objeto de error con la respuesta del backend
+  PÁGINA DE LOGIN - pages/LoginPage.tsx (shadcn/ui)
   =====================================================
 */
 
@@ -27,13 +13,15 @@ import { useState } from 'react';
 import { loginSchema, type LoginFormValues } from '../lib/validations';
 import { loginService } from '../api/services';
 import { useAuth } from '../context/AuthContext';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../components/ui/card';
+import { Input } from '../components/ui/input';
+import { Button } from '../components/ui/button';
 
 export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
-  // Conectamos el formulario con el esquema Zod
   const {
     register,
     handleSubmit,
@@ -42,135 +30,114 @@ export default function LoginPage() {
     resolver: zodResolver(loginSchema),
   });
 
-  // useMutation maneja el estado de la petición POST /auth/login
   const { mutate: doLogin, isPending, error } = useMutation({
-    mutationFn: loginService, // La función que llama al backend
+    mutationFn: loginService,
     onSuccess: (data) => {
-      // Si el backend responde con éxito (2xx):
-      login(data);           // Guardamos el usuario en el contexto global
-      navigate('/dashboard'); // Redirigimos al dashboard
+      login(data);
+      navigate('/dashboard');
     },
-    // onError se llama automáticamente si la promesa falla.
-    // No necesitamos hacer nada aquí porque usamos el objeto 'error' de arriba.
   });
 
-  // React Hook Form llama a esta función solo si Zod valida correctamente.
   const onSubmit = (values: LoginFormValues) => {
     doLogin(values);
   };
 
-  // Extraemos el mensaje de error del backend si existe.
-  // axios guarda la respuesta del servidor en error.response.data
   const errorMessage = error
     ? (error as any)?.response?.data?.message ?? 'Correo o contraseña incorrectos.'
     : null;
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-brand-bg px-4">
-      {/* Fondo decorativo con gradiente radial */}
+    <div className="flex min-h-screen items-center justify-center bg-slate-950 px-4">
+      {/* Fondo decorativo con gradiente radial de alta gama */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-brand-primary/10 blur-3xl" />
+        <div className="absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-indigo-600/10 blur-[120px]" />
       </div>
 
       <div className="relative w-full max-w-md">
-        {/* Header */}
-        <div className="mb-8 text-center">
-          <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-primary shadow-lg shadow-brand-primary/30">
-            <LogIn size={26} className="text-white" />
+        {/* Header de la marca */}
+        <div className="mb-6 text-center">
+          <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 shadow-xl shadow-indigo-500/25">
+            <LogIn size={22} className="text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-brand-text">Bienvenido</h1>
-          <p className="mt-2 text-brand-muted">Inicia sesión en tu cuenta</p>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-100">Bienvenido de nuevo</h1>
+          <p className="mt-1 text-sm text-slate-400">Ingresa tus credenciales para acceder a tus tareas</p>
         </div>
 
-        {/* Tarjeta del formulario */}
-        <div className="rounded-2xl border border-brand-border bg-brand-surface p-8 shadow-2xl shadow-black/40">
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5" noValidate>
-
-            {/* Campo Email */}
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="email" className="text-sm font-medium text-brand-muted">
+        {/* Tarjeta Shadcn */}
+        <Card className="border-slate-800 bg-slate-900/80 p-6 shadow-2xl backdrop-blur-xl">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
+            <div className="space-y-1.5">
+              <label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-slate-400">
                 Correo Electrónico
               </label>
-              <input
+              <Input
                 id="email"
                 type="email"
                 autoComplete="email"
                 {...register('email')}
                 placeholder="tu@correo.com"
-                className={`
-                  rounded-lg border bg-brand-bg px-4 py-3 text-brand-text placeholder-brand-muted/40
-                  outline-none transition-all duration-200
-                  focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20
-                  ${errors.email ? 'border-red-500 ring-2 ring-red-500/20' : 'border-brand-border'}
-                `}
+                className={errors.email ? 'border-rose-500/80' : ''}
               />
               {errors.email && (
-                <p className="text-xs text-red-400">{errors.email.message}</p>
+                <p className="text-xs text-rose-400">{errors.email.message}</p>
               )}
             </div>
 
-            {/* Campo Contraseña con toggle de visibilidad */}
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="password" className="text-sm font-medium text-brand-muted">
+            <div className="space-y-1.5">
+              <label htmlFor="password" className="text-xs font-semibold uppercase tracking-wider text-slate-400">
                 Contraseña
               </label>
               <div className="relative">
-                <input
+                <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   {...register('password')}
                   placeholder="••••••••"
-                  className={`
-                    w-full rounded-lg border bg-brand-bg px-4 py-3 pr-12 text-brand-text placeholder-brand-muted/40
-                    outline-none transition-all duration-200
-                    focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20
-                    ${errors.password ? 'border-red-500 ring-2 ring-red-500/20' : 'border-brand-border'}
-                  `}
+                  className={errors.password ? 'border-rose-500/80 pr-10' : 'pr-10'}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-muted transition-colors hover:text-brand-text"
-                  aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition-colors"
                 >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
               {errors.password && (
-                <p className="text-xs text-red-400">{errors.password.message}</p>
+                <p className="text-xs text-rose-400">{errors.password.message}</p>
               )}
             </div>
 
-            {/* Error del backend */}
             {errorMessage && (
-              <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+              <div className="rounded-lg border border-rose-500/30 bg-rose-500/10 p-3 text-xs font-medium text-rose-400">
                 {errorMessage}
               </div>
             )}
 
-            {/* Botón Submit */}
-            <button
+            <Button
               type="submit"
               disabled={isPending}
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-brand-primary py-3 font-semibold text-white shadow-lg shadow-brand-primary/20 transition-all hover:bg-brand-primary-hover hover:shadow-brand-primary/30 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
+              className="w-full h-11 text-base font-semibold"
             >
               {isPending ? (
-                <><Loader2 size={18} className="animate-spin" /> Iniciando sesión...</>
+                <>
+                  <Loader2 size={18} className="animate-spin mr-2" />
+                  Iniciando sesión...
+                </>
               ) : (
-                <>Iniciar Sesión</>
+                'Iniciar Sesión'
               )}
-            </button>
+            </Button>
           </form>
 
-          {/* Link a registro */}
-          <p className="mt-6 text-center text-sm text-brand-muted">
-            ¿No tienes cuenta?{' '}
-            <Link to="/register" className="font-semibold text-brand-primary transition-colors hover:text-brand-accent">
+          <div className="mt-6 text-center text-sm text-slate-400">
+            ¿No tienes una cuenta?{' '}
+            <Link to="/register" className="font-semibold text-indigo-400 hover:text-indigo-300 underline-offset-4 hover:underline">
               Regístrate gratis
             </Link>
-          </p>
-        </div>
+          </div>
+        </Card>
       </div>
     </div>
   );

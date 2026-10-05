@@ -1,38 +1,24 @@
 /*
   =====================================================
-  SISTEMA DE DISEÑO GLOBAL - index.css
-  =====================================================
-  Aquí importamos Tailwind v4 (sin config file) y
-  definemos nuestras variables CSS personalizadas.
-
-  Tailwind v4 usa la directiva @import "tailwindcss"
-  en lugar del antiguo @tailwind base/components/utilities.
-
-  Las variables CSS (@theme) son la forma correcta de
-  extender Tailwind v4 con colores y fuentes propias.
+  SISTEMA DE DISEÑO GLOBAL (shadcn/ui + Tailwind v4)
   =====================================================
 */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
-/* 
-  @theme es la nueva forma de Tailwind v4 de definir tokens.
-  Estos tokens se convierten automáticamente en clases de utilidad.
-  Ejemplo: bg-brand-primary, text-brand-muted, etc.
-*/
 @theme {
-  --color-brand-bg: #0a0a14;
-  --color-brand-surface: #111120;
-  --color-brand-surface-2: #1a1a2e;
-  --color-brand-border: rgba(255, 255, 255, 0.07);
-  --color-brand-primary: #7c6bff;
-  --color-brand-primary-hover: #6a59e8;
-  --color-brand-accent: #00d4ff;
-  --color-brand-success: #22d67a;
-  --color-brand-danger: #ff4560;
-  --color-brand-text: #e2e2f0;
-  --color-brand-muted: #7878a0;
+  --color-brand-bg: #090d16;
+  --color-brand-surface: #0f172a;
+  --color-brand-surface-2: #1e293b;
+  --color-brand-border: rgba(255, 255, 255, 0.08);
+  --color-brand-primary: #6366f1;
+  --color-brand-primary-hover: #4f46e5;
+  --color-brand-accent: #38bdf8;
+  --color-brand-success: #10b981;
+  --color-brand-danger: #f43f5e;
+  --color-brand-text: #f8fafc;
+  --color-brand-muted: #94a3b8;
 
   --font-sans: 'Inter', system-ui, sans-serif;
 }
@@ -42,8 +28,6 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 html {
@@ -52,22 +36,22 @@ html {
 }
 
 body {
-  background-color: var(--color-brand-bg);
-  color: var(--color-brand-text);
+  background-color: #090d16;
+  color: #f8fafc;
   min-height: 100vh;
 }
 
-/* 
-  Scrollbar personalizado - pequeño detalle que hace que
-  la app se vea premium en lugar de genérica.
-*/
+/* Scrollbar personalizado de alta gama */
 ::-webkit-scrollbar {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-brand-surface);
+  background: #0f172a;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-brand-primary);
-  border-radius: 10px;
+  background: #334155;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #6366f1;
 }

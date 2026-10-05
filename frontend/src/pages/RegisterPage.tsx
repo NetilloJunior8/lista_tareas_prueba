@@ -1,13 +1,6 @@
 /*
   =====================================================
-  PÁGINA DE REGISTRO - pages/RegisterPage.tsx
-  =====================================================
-  Misma arquitectura que LoginPage. Notar que:
-  - Tiene un campo extra: nombre
-  - Tiene confirmación de contraseña (validación .refine en Zod)
-  - Llama a registerService en lugar de loginService
-  - Al registrarse exitosamente también hace login automático
-    porque el backend devuelve el token directamente.
+  PÁGINA DE REGISTRO - pages/RegisterPage.tsx (shadcn/ui)
   =====================================================
 */
 
@@ -20,6 +13,9 @@ import { useState } from 'react';
 import { registerSchema, type RegisterFormValues } from '../lib/validations';
 import { registerService } from '../api/services';
 import { useAuth } from '../context/AuthContext';
+import { Card } from '../components/ui/card';
+import { Input } from '../components/ui/input';
+import { Button } from '../components/ui/button';
 
 export default function RegisterPage() {
   const { login } = useAuth();
@@ -43,7 +39,6 @@ export default function RegisterPage() {
   });
 
   const onSubmit = (values: RegisterFormValues) => {
-    // No enviamos confirmPassword al backend, solo lo usamos para validar en el front.
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { confirmPassword, ...registerData } = values;
     doRegister(registerData);
@@ -54,157 +49,128 @@ export default function RegisterPage() {
     : null;
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-brand-bg px-4 py-8">
-      {/* Fondo decorativo */}
+    <div className="flex min-h-screen items-center justify-center bg-slate-950 px-4 py-8">
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-brand-accent/5 blur-3xl" />
+        <div className="absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-violet-600/10 blur-[120px]" />
       </div>
 
       <div className="relative w-full max-w-md">
-        {/* Header */}
-        <div className="mb-8 text-center">
-          <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-primary to-brand-accent shadow-lg shadow-brand-primary/30">
-            <UserPlus size={26} className="text-white" />
+        <div className="mb-6 text-center">
+          <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 shadow-xl shadow-indigo-500/25">
+            <UserPlus size={22} className="text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-brand-text">Crea tu cuenta</h1>
-          <p className="mt-2 text-brand-muted">Comienza a organizar tus tareas hoy</p>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-100">Crea tu cuenta</h1>
+          <p className="mt-1 text-sm text-slate-400">Organiza tus tareas con estándar profesional</p>
         </div>
 
-        {/* Tarjeta del formulario */}
-        <div className="rounded-2xl border border-brand-border bg-brand-surface p-8 shadow-2xl shadow-black/40">
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5" noValidate>
-
-            {/* Campo Nombre */}
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="nombre" className="text-sm font-medium text-brand-muted">
-                Nombre completo
+        <Card className="border-slate-800 bg-slate-900/80 p-6 shadow-2xl backdrop-blur-xl">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
+            <div className="space-y-1.5">
+              <label htmlFor="nombre" className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                Nombre Completo
               </label>
-              <input
+              <Input
                 id="nombre"
                 type="text"
                 autoComplete="name"
                 {...register('nombre')}
                 placeholder="Juan Pérez"
-                className={`
-                  rounded-lg border bg-brand-bg px-4 py-3 text-brand-text placeholder-brand-muted/40
-                  outline-none transition-all duration-200
-                  focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20
-                  ${errors.nombre ? 'border-red-500 ring-2 ring-red-500/20' : 'border-brand-border'}
-                `}
+                className={errors.nombre ? 'border-rose-500/80' : ''}
               />
               {errors.nombre && (
-                <p className="text-xs text-red-400">{errors.nombre.message}</p>
+                <p className="text-xs text-rose-400">{errors.nombre.message}</p>
               )}
             </div>
 
-            {/* Campo Email */}
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="email" className="text-sm font-medium text-brand-muted">
+            <div className="space-y-1.5">
+              <label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-slate-400">
                 Correo Electrónico
               </label>
-              <input
+              <Input
                 id="email"
                 type="email"
                 autoComplete="email"
                 {...register('email')}
                 placeholder="tu@correo.com"
-                className={`
-                  rounded-lg border bg-brand-bg px-4 py-3 text-brand-text placeholder-brand-muted/40
-                  outline-none transition-all duration-200
-                  focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20
-                  ${errors.email ? 'border-red-500 ring-2 ring-red-500/20' : 'border-brand-border'}
-                `}
+                className={errors.email ? 'border-rose-500/80' : ''}
               />
               {errors.email && (
-                <p className="text-xs text-red-400">{errors.email.message}</p>
+                <p className="text-xs text-rose-400">{errors.email.message}</p>
               )}
             </div>
 
-            {/* Campo Contraseña */}
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="password" className="text-sm font-medium text-brand-muted">
+            <div className="space-y-1.5">
+              <label htmlFor="password" className="text-xs font-semibold uppercase tracking-wider text-slate-400">
                 Contraseña
               </label>
               <div className="relative">
-                <input
+                <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="new-password"
                   {...register('password')}
                   placeholder="Mínimo 6 caracteres"
-                  className={`
-                    w-full rounded-lg border bg-brand-bg px-4 py-3 pr-12 text-brand-text placeholder-brand-muted/40
-                    outline-none transition-all duration-200
-                    focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20
-                    ${errors.password ? 'border-red-500 ring-2 ring-red-500/20' : 'border-brand-border'}
-                  `}
+                  className={errors.password ? 'border-rose-500/80 pr-10' : 'pr-10'}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-muted transition-colors hover:text-brand-text"
-                  aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition-colors"
                 >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
               {errors.password && (
-                <p className="text-xs text-red-400">{errors.password.message}</p>
+                <p className="text-xs text-rose-400">{errors.password.message}</p>
               )}
             </div>
 
-            {/* Confirmar Contraseña */}
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="confirmPassword" className="text-sm font-medium text-brand-muted">
+            <div className="space-y-1.5">
+              <label htmlFor="confirmPassword" className="text-xs font-semibold uppercase tracking-wider text-slate-400">
                 Confirmar Contraseña
               </label>
-              <input
+              <Input
                 id="confirmPassword"
                 type={showPassword ? 'text' : 'password'}
                 autoComplete="new-password"
                 {...register('confirmPassword')}
                 placeholder="Repite tu contraseña"
-                className={`
-                  rounded-lg border bg-brand-bg px-4 py-3 text-brand-text placeholder-brand-muted/40
-                  outline-none transition-all duration-200
-                  focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20
-                  ${errors.confirmPassword ? 'border-red-500 ring-2 ring-red-500/20' : 'border-brand-border'}
-                `}
+                className={errors.confirmPassword ? 'border-rose-500/80' : ''}
               />
               {errors.confirmPassword && (
-                <p className="text-xs text-red-400">{errors.confirmPassword.message}</p>
+                <p className="text-xs text-rose-400">{errors.confirmPassword.message}</p>
               )}
             </div>
 
-            {/* Error del backend */}
             {errorMessage && (
-              <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+              <div className="rounded-lg border border-rose-500/30 bg-rose-500/10 p-3 text-xs font-medium text-rose-400">
                 {errorMessage}
               </div>
             )}
 
-            {/* Botón Submit */}
-            <button
+            <Button
               type="submit"
               disabled={isPending}
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-brand-primary to-brand-accent py-3 font-semibold text-white shadow-lg shadow-brand-primary/20 transition-all hover:shadow-brand-primary/30 hover:opacity-90 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
+              className="w-full h-11 text-base font-semibold"
             >
               {isPending ? (
-                <><Loader2 size={18} className="animate-spin" /> Creando cuenta...</>
+                <>
+                  <Loader2 size={18} className="animate-spin mr-2" />
+                  Creando cuenta...
+                </>
               ) : (
-                <>Crear Cuenta</>
+                'Crear Cuenta'
               )}
-            </button>
+            </Button>
           </form>
 
-          {/* Link a login */}
-          <p className="mt-6 text-center text-sm text-brand-muted">
-            ¿Ya tienes cuenta?{' '}
-            <Link to="/login" className="font-semibold text-brand-primary transition-colors hover:text-brand-accent">
+          <div className="mt-6 text-center text-sm text-slate-400">
+            ¿Ya tienes una cuenta?{' '}
+            <Link to="/login" className="font-semibold text-indigo-400 hover:text-indigo-300 underline-offset-4 hover:underline">
               Inicia sesión
             </Link>
-          </p>
-        </div>
+          </div>
+        </Card>
       </div>
     </div>
   );
