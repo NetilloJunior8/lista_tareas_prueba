@@ -60,13 +60,14 @@ apiClient.interceptors.response.use(
   (error) => {
     // Si el código de respuesta es 401 (Unauthorized):
     if (error.response?.status === 401) {
-      // Eliminamos el usuario del localStorage
-      localStorage.removeItem('taskapp:user');
-      // Redirigimos al login. Usamos window.location porque
-      // aquí no tenemos acceso al hook useNavigate de React Router.
-      window.location.href = '/login';
+      const isAuthRoute = window.location.pathname === '/login' || window.location.pathname === '/register';
+      if (!isAuthRoute) {
+        // Solo expulsamos al usuario si estaba navegando dentro de rutas protegidas
+        localStorage.removeItem('taskapp:user');
+        window.location.href = '/login';
+      }
     }
-    // Rechazamos la promesa para que el catch del componente pueda capturarlo.
+    // Rechazamos la promesa para que React Query / React Hook Form pueda capturar el error
     return Promise.reject(error);
   }
 );
